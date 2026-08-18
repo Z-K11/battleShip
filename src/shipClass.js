@@ -5,9 +5,13 @@ export default class ships {
   #numberOfHits;
   #sinkStatus;
   constructor(l) {
-    // initialy a ship will have zero hits and sink status is set to false because ship has not sunk yet
+    // initialy a ship will have zero hits and sink status is set to false because ship has not sunk yet lol
     this.#shipLength = l;
     this.#numberOfHits = 0;
     this.#sinkStatus = false;
+  }
+  // increases number of hits taken by the ship on call
+  hit() {
+    this.#numberOfHits++;
   }
 }
