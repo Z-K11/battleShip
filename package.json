@@ -1,0 +1,54 @@
+{
+  "devDependencies": {
+    "@babel/preset-env": "^7.29.7",
+    "@eslint/css": "^1.4.0",
+    "@eslint/js": "^10.0.1",
+    "@eslint/json": "^2.0.1",
+    "@eslint/markdown": "^8.0.3",
+    "css-loader": "^7.1.4",
+    "eslint": "^10.7.0",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.8.0",
+    "html-webpack-plugin": "^5.6.7",
+    "jest": "^30.4.2",
+    "prettier": "3.9.6",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.108.4",
+    "webpack-cli": "^7.2.1",
+    "webpack-dev-server": "^6.0.0",
+    "webpack-merge": "^6.0.1"
+  },
+  "name": "webpacktemplate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "clone-deep": "^4.0.1",
+    "flat": "^5.0.2",
+    "is-plain-object": "^2.0.4",
+    "isobject": "^3.0.1",
+    "kind-of": "^6.0.3",
+    "shallow-clone": "^3.0.1",
+    "wildcard": "^2.0.1"
+  },
+  "scripts": {
+    "test": "jest",
+    "build": "webpack --config webpack.prod.js",
+    "start": "webpack serve --open --config webpack.dev.js",
+    "lint": "eslint ./src/",
+    "format": "prettier --write ./src/",
+    "formatCHeck": "prettier --check ./src/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Z-K11/webPackTemplate.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Z-K11/webPackTemplate/issues"
+  },
+  "homepage": "https://github.com/Z-K11/webPackTemplate#readme"
+}
