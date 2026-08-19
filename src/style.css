@@ -9,6 +9,8 @@
 body {
   width: 100vw;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 header {
   width: 100%;
@@ -24,4 +26,22 @@ header {
   display: flex;
   align-items: center;
   font-size: 2rem;
+}
+.gameContainer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex: 1;
+}
+.gameBoard {
+  width: 537px;
+  height: 537px;
+  background-color: black;
+  padding: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+.gridBox {
+  background-color: lightcoral;
 }
