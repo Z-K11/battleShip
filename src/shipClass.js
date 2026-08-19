@@ -10,8 +10,19 @@ export default class ships {
     this.#numberOfHits = 0;
     this.#sinkStatus = false;
   }
+
   // increases number of hits taken by the ship on call
   hit() {
-    this.#numberOfHits++;
+    if (this.#numberOfHits < this.#shipLength) this.#numberOfHits++;
+  }
+
+  //
+  isSunk() {
+    if (this.#sinkStatus) return true;
+    if (this.#numberOfHits >= this.#shipLength) {
+      this.#sinkStatus = true;
+      return true;
+    }
+    return false;
   }
 }
