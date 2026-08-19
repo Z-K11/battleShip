@@ -1,7 +1,8 @@
 export default class gameBoard {
   #boardArray = [];
-  constructor(for_player) {
-    this.#makeBoard(for_player);
+  constructor() {
+    this.#makeBoard('playerOne');
+    this.#makeBoard('playerTwo');
   }
   #makeBoard(player) {
     for (let i = 0; i < 20; i++) {
