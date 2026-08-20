@@ -31,13 +31,12 @@ export default class boardManipulator {
       );
 
       const target = e.target.id;
-      // if target already has a ship assigned return
-      if (e.target.classList.contains('ship')) return;
       // extracting grid number from targetID as an integer
       const referenceBox = parseInt(target.substring(18));
       // extracting column number from the current row
       const range = parseInt(target.slice(-1));
 
+      let shipCellLocation = [];
       //if column can accomodate a ship place a ship
       if (9 - range >= currentShip.shipsLength - 1) {
         // looping until we place the ship on grid
@@ -46,11 +45,27 @@ export default class boardManipulator {
           const currentBox = document.querySelector(
             `#playerBoardGridBox${referenceBox + i}`
           );
+          // checking if the current cell is occupied
+          if (currentBox.classList.contains('ship')) {
+            alert('Cannot place ship required cell(s) already occupied');
+            // looping over non previously occupied cells to remove the ship blocks
+            for (let cellNumber of shipCellLocation) {
+              const removeCell = document.querySelector(
+                `#playerBoardGridBox${cellNumber}`
+              );
+              // removing type data set
+              delete removeCell.dataset.shipType;
+              removeCell.classList.remove('ship');
+            }
+            return;
+          }
           // added ship type to dataset
           currentBox.dataset.shipType =
             shipNames[this.#playerShiPlacementIndex];
           // adding ship class to display the ship on screen
           currentBox.classList.add('ship');
+          // keeping track of already visited empty nodes
+          shipCellLocation.push(referenceBox + i);
         }
         // increases index for next ship type
         this.#playerShiPlacementIndex++;
