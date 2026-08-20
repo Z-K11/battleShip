@@ -1,8 +1,9 @@
 import shipMake from './shipClass.js';
-import { boardDom } from './boardDom.js';
+import boardDom from './boardDom.js';
 export default class gameBoard {
   #playerBoardArray = [];
   #computerBoardArray = [];
+  #domManager = new boardDom();
   #playerShips = {
     Carrier: new shipMake(5),
     Battleship: new shipMake(4),
@@ -19,7 +20,8 @@ export default class gameBoard {
   };
 
   constructor(playerBoard, computerBoard) {
-    boardDom.makeBoard(playerBoard, this.#playerBoardArray);
-    boardDom.makeBoard(computerBoard, this.#computerBoardArray);
+    this.#domManager.makeBoard(playerBoard, this.#playerBoardArray);
+    this.#domManager.makeBoard(computerBoard, this.#computerBoardArray);
+    this.#domManager.playerPlacer(playerBoard, this.#playerShips);
   }
 }

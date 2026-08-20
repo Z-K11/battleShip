@@ -25,4 +25,9 @@ export default class ships {
     }
     return false;
   }
+
+  //return length of the ship
+  get shipsLength() {
+    return this.#shipLength;
+  }
 }

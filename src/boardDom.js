@@ -1,5 +1,5 @@
 // class for handling all dom calls for gameBoard
-class boardManipulator {
+export default class boardManipulator {
   // takes a parent node and an array as arguement builds a grid appends it to the parent node and saves the references to the nodes in the array
   makeBoard(player, boardArray) {
     for (let i = 0; i < 100; i++) {
@@ -11,5 +11,9 @@ class boardManipulator {
       player.appendChild(boardArray[i]);
     }
   }
+  playerPlacer(node, shipObject) {
+    node.addEventListener('click', (e) => {
+      console.log(e.target.id);
+    });
+  }
 }
-export let boardDom = new boardManipulator();

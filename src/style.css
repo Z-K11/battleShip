@@ -32,16 +32,17 @@ header {
   justify-content: space-around;
   align-items: center;
   flex: 1;
+  background-color: bisque;
 }
 .gameBoard {
   width: 537px;
   height: 537px;
-  background-color: black;
+  background-color: white;
   padding: 5px;
   display: flex;
   flex-wrap: wrap;
   gap: 3px;
 }
 .gridBox {
-  background-color: lightcoral;
+  background-color: aqua;
 }

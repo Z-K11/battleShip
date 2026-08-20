@@ -21,4 +21,4 @@ const canvas = document.querySelector('.gameContainer');
 canvas.append(playerBoard, computerBoard);
 
 //Initializing game
-game = new gameMaker(playerBoard, computerBoard);
+let game = new gameMaker(playerBoard, computerBoard);
