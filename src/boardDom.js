@@ -1,3 +1,5 @@
+// random number genarator
+import { numberisor } from './numberisor.js';
 // class for handling all dom calls for gameBoard
 export default class boardManipulator {
   // decides which ship's turn is it to be placed
@@ -19,7 +21,10 @@ export default class boardManipulator {
     node.addEventListener('click', (e) => {
       if (this.#playerShiPlacementIndex > 4) return;
       const shipNames = Object.keys(shipObject);
-      let currentShip = this.#retunShipType(shipObject);
+      let currentShip = this.#returnShipType(
+        shipObject,
+        this.#playerShiPlacementIndex
+      );
 
       const target = e.target.id;
       const referenceBox = parseInt(target.substring(18));
@@ -41,10 +46,33 @@ export default class boardManipulator {
   }
   computerPlacer(node, shipObject) {
     if (this.#computerShiplacementIndex > 4) return;
+    let visited = [];
     const shipName = Object.keys(shipObject);
+    while (this.#computerShiplacementIndex <= 4) {
+      let num = numberisor(0, 100);
+      while (visited.includes(num)) num = numberisor(0, 100);
+      const currentShip = this.#returnShipType(
+        shipObject,
+        this.#computerShiplacementIndex
+      );
+      const gridBox = document.querySelector(`#computerBoardGridBox${num}`);
+      const range = parseInt(gridBox.id.slice(-1));
+      if (9 - range >= currentShip.shipsLength - 1) {
+        for (let i = 0; i < currentShip.shipsLength; i++) {
+          const currentBox = document.querySelector(
+            `#computerBoardGridBox${num + i}`
+          );
+          currentBox.dataset.shipType =
+            shipName[this.#computerShiplacementIndex];
+          currentBox.classList.add('ship');
+          visited.push(num + i);
+        }
+        this.#computerShiplacementIndex++;
+      }
+    }
   }
-  #retunShipType(shipObject) {
-    switch (this.#playerShiPlacementIndex) {
+  #returnShipType(shipObject, shipIndex) {
+    switch (shipIndex) {
       case 0:
         return shipObject.Carrier;
       case 1:
