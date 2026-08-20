@@ -1,7 +1,8 @@
 // class for handling all dom calls for gameBoard
 export default class boardManipulator {
   // decides which ship's turn is it to be placed
-  #shiPlacementIndex = 0;
+  #playerShiPlacementIndex = 0;
+  #computerShiplacementIndex = 0;
 
   // takes a parent node and an array as arguement builds a grid appends it to the parent node and saves the references to the nodes in the array
   makeBoard(player, boardArray) {
@@ -16,7 +17,7 @@ export default class boardManipulator {
   }
   playerPlacer(node, shipObject) {
     node.addEventListener('click', (e) => {
-      if (this.#shiPlacementIndex > 4) return;
+      if (this.#playerShiPlacementIndex > 4) return;
       const shipNames = Object.keys(shipObject);
       let currentShip = this.#retunShipType(shipObject);
 
@@ -28,17 +29,22 @@ export default class boardManipulator {
           const currentBox = document.querySelector(
             `#playerBoardGridBox${referenceBox + i}`
           );
-          currentBox.dataset.shipType = shipNames[this.#shiPlacementIndex];
+          currentBox.dataset.shipType =
+            shipNames[this.#playerShiPlacementIndex];
           currentBox.classList.add('ship');
         }
-        this.#shiPlacementIndex++;
+        this.#playerShiPlacementIndex++;
       } else {
         return;
       }
     });
   }
+  computerPlacer(node, shipObject) {
+    if (this.#computerShiplacementIndex > 4) return;
+    const shipName = Object.keys(shipObject);
+  }
   #retunShipType(shipObject) {
-    switch (this.#shiPlacementIndex) {
+    switch (this.#playerShiPlacementIndex) {
       case 0:
         return shipObject.Carrier;
       case 1:
