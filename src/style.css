@@ -46,3 +46,6 @@ header {
 .gridBox {
   background-color: aqua;
 }
+.ship {
+  background-color: rgb(82, 0, 0);
+}

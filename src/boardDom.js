@@ -42,12 +42,14 @@ export default class boardManipulator {
       const target = e.target.id;
       const referenceBox = parseInt(target.substring(18));
       const range = parseInt(target.slice(-1));
-      if (range <= currentShip.shipsLength) {
+      console.log(range);
+      if (9 - range >= currentShip.shipsLength - 1) {
         for (let i = 0; i < currentShip.shipsLength; i++) {
           const currentBox = document.querySelector(
             `#playerBoardGridBox${referenceBox + i}`
           );
           currentBox.dataset.shipType = shipNames[this.#shiPlacementIndex];
+          currentBox.classList.add('ship');
         }
         this.#shiPlacementIndex++;
       } else {
