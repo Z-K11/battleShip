@@ -18,31 +18,11 @@ export default class boardManipulator {
     node.addEventListener('click', (e) => {
       if (this.#shiPlacementIndex > 4) return;
       const shipNames = Object.keys(shipObject);
-      let currentShip;
-      switch (this.#shiPlacementIndex) {
-        case 0:
-          currentShip = shipObject.Carrier;
-          break;
-        case 1:
-          currentShip = shipObject.Battleship;
-          break;
-        case 2:
-          currentShip = shipObject.Cruiser;
-          break;
-        case 3:
-          currentShip = shipObject.Submarine;
-          break;
-        case 4:
-          currentShip = shipObject.Destroyer;
-          break;
-        default:
-          console.log('Error in playerPlacer switch statement');
-          break;
-      }
+      let currentShip = this.#retunShipType(shipObject);
+
       const target = e.target.id;
       const referenceBox = parseInt(target.substring(18));
       const range = parseInt(target.slice(-1));
-      console.log(range);
       if (9 - range >= currentShip.shipsLength - 1) {
         for (let i = 0; i < currentShip.shipsLength; i++) {
           const currentBox = document.querySelector(
@@ -56,5 +36,22 @@ export default class boardManipulator {
         return;
       }
     });
+  }
+  #retunShipType(shipObject) {
+    switch (this.#shiPlacementIndex) {
+      case 0:
+        return shipObject.Carrier;
+      case 1:
+        return shipObject.Battleship;
+      case 2:
+        return shipObject.Cruiser;
+      case 3:
+        return shipObject.Submarine;
+      case 4:
+        return shipObject.Destroyer;
+      default:
+        console.log('Error in playerPlacer switch statement');
+        break;
+    }
   }
 }
