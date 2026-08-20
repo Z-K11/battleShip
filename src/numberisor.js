@@ -1,3 +1,3 @@
 export function numberisor(min, max) {
-  return Math.floor(Math.random() * (max - min)) + max;
+  return Math.floor(Math.random() * (max - min)) + min;
 }
