@@ -18,27 +18,41 @@ export default class boardManipulator {
     }
   }
   playerPlacer(node, shipObject) {
+    //click event listner
     node.addEventListener('click', (e) => {
+      // if all ships already placed return do nothing
       if (this.#playerShiPlacementIndex > 4) return;
+      // ship names to be assigned to dataset attribue later
       const shipNames = Object.keys(shipObject);
+      // function which returns the correct ship type using current index
       let currentShip = this.#returnShipType(
         shipObject,
         this.#playerShiPlacementIndex
       );
 
       const target = e.target.id;
+      // if target already has a ship assigned return
       if (e.target.classList.contains('ship')) return;
+      // extracting grid number from targetID as an integer
       const referenceBox = parseInt(target.substring(18));
+      // extracting column number from the current row
       const range = parseInt(target.slice(-1));
+
+      //if column can accomodate a ship place a ship
       if (9 - range >= currentShip.shipsLength - 1) {
+        // looping until we place the ship on grid
         for (let i = 0; i < currentShip.shipsLength; i++) {
+          // placing ship from origin to adjacent right node every turn
           const currentBox = document.querySelector(
             `#playerBoardGridBox${referenceBox + i}`
           );
+          // added ship type to dataset
           currentBox.dataset.shipType =
             shipNames[this.#playerShiPlacementIndex];
+          // adding ship class to display the ship on screen
           currentBox.classList.add('ship');
         }
+        // increases index for next ship type
         this.#playerShiPlacementIndex++;
       } else {
         return;
@@ -72,6 +86,8 @@ export default class boardManipulator {
       }
     }
   }
+
+  // returns the correct ship type using ship index
   #returnShipType(shipObject, shipIndex) {
     switch (shipIndex) {
       case 0:
