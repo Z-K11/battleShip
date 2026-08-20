@@ -27,6 +27,7 @@ export default class boardManipulator {
       );
 
       const target = e.target.id;
+      if (e.target.classList.contains('ship')) return;
       const referenceBox = parseInt(target.substring(18));
       const range = parseInt(target.slice(-1));
       if (9 - range >= currentShip.shipsLength - 1) {
