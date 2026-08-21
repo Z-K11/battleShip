@@ -1,11 +1,16 @@
 // random number generator
 import { numberisor } from './numberisor.js';
 import { uniqueRangedNumberGenerator } from './numberisor.js';
+import { gameRef } from './gameReferee.js';
 // class for handling all dom calls for gameBoard
 export default class boardManipulator {
   // decides which ship's turn is it to be placed
   #playerShiPlacementIndex = 0;
   #computerShiplacementIndex = 0;
+
+  #endGame = false;
+
+  #referee = new gameRef();
 
   // takes a parent node and an array as argument builds a grid appends it to the parent node and saves the references to the nodes in the array
   makeBoard(player, boardArray) {
@@ -25,10 +30,6 @@ export default class boardManipulator {
     node.addEventListener('click', (e) => {
       // if all ships already placed return do nothing
       if (this.#playerShiPlacementIndex <= 4) this.#playerPlacer(e, shipObject);
-      else {
-        //this line is temporarily used for testing
-        // this.enemyCanonFire(node, shipObject, false);
-      }
     });
   }
 
@@ -163,17 +164,26 @@ export default class boardManipulator {
     }
   }
 
-  initializeCannons(node, enemyShips) {
+  initializeCannons(node, enemyShips, playerShips) {
     node.addEventListener('click', (e) => {
       if (this.#playerShiPlacementIndex <= 4) return;
-      else {
-        this.#attack(e, enemyShips);
+      if (this.#endGame) return;
+      this.#attack(e, enemyShips);
+      if (this.#referee.checkPlayerWin(enemyShips)) {
+        alert('Player Won');
+        this.#endGame = true;
+      }
+      this.#enemyCanonFire(playerShips);
+      if (this.#referee.checkEnemyWin(playerShips)) {
+        alert('Enemy Won');
+        this.#endGame = true;
       }
     });
   }
 
   // function to register a hit on an enemy ship
   #attack(e, enemyShips) {
+    console.log('attack fired');
     const target = e.target;
     if (target.hasAttribute('data-ship-type')) {
       const ship = target.dataset.shipType;
@@ -181,8 +191,8 @@ export default class boardManipulator {
       target.classList.add('shipHit');
     }
   }
-  enemyCanonFire(node, playerShips, playerTurn) {
-    if (playerTurn) return;
+  #enemyCanonFire(playerShips) {
+    console.log('cannonFired');
     const num = uniqueRangedNumberGenerator();
     const currentNode = document.querySelector(`#playerBoardGridBox${num}`);
     if (currentNode.hasAttribute('data-ship-type')) {
