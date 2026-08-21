@@ -75,27 +75,61 @@ export default class boardManipulator {
     });
   }
   computerPlacer(node, shipObject) {
-    if (this.#computerShiplacementIndex > 4) return;
     let visited = [];
+    // storing ship names
     const shipName = Object.keys(shipObject);
+    // looping until all ships are placed
     while (this.#computerShiplacementIndex <= 4) {
+      // generating random cell number
       let num = numberisor(0, 100);
+
+      // if the random number was already previously generated, generate again
       while (visited.includes(num)) num = numberisor(0, 100);
+
+      // getting current ship type to place on grid cell
       const currentShip = this.#returnShipType(
         shipObject,
         this.#computerShiplacementIndex
       );
-      const gridBox = document.querySelector(`#computerBoardGridBox${num}`);
-      const range = parseInt(gridBox.id.slice(-1));
+      // stores previous cell numbers where ship blocks have been placed
+      let previousCells = [];
+      // extracting column number from cell number
+      const range = parseInt(String(num).slice(-1));
+
+      // checking if all adjacent columns can accommodate current ship
       if (9 - range >= currentShip.shipsLength - 1) {
         for (let i = 0; i < currentShip.shipsLength; i++) {
           const currentBox = document.querySelector(
             `#computerBoardGridBox${num + i}`
           );
+
+          //check if current node cell is colliding with another ship
+          if (currentBox.classList.contains('ship')) {
+            // remove ship from the grid in case of collision
+            for (let currentCell of previousCells) {
+              const currentNode = document.querySelector(
+                `#computerBoardGridBox${currentCell}`
+              );
+              // delete dataset shipType from colliding cell
+              delete currentNode.dataset.shipType;
+              // remove ship from ui
+              currentNode.classList.remove('ship');
+              // mark current point us visited to avoid placing ship again
+              visited.push(currentCell);
+            }
+            // reverting ship index back
+            this.#computerShiplacementIndex--;
+            // break out of current loop to start ship placement again
+            continue;
+          }
+
+          // assign ship type as dataset
           currentBox.dataset.shipType =
             shipName[this.#computerShiplacementIndex];
           currentBox.classList.add('ship');
+          // add current cell number into visited for tracking
           visited.push(num + i);
+          previousCells.push(num + i);
         }
         this.#computerShiplacementIndex++;
       }
