@@ -19,9 +19,9 @@ export default class gameBoard {
     Destroyer: new shipMake(2),
   };
   #playerGrid;
-  #computerGrid;
+  // #computerGrid;
   constructor(playerBoard, computerBoard) {
-    this.#computerGrid = computerBoard;
+    // this.#computerGrid = computerBoard;
     this.#playerGrid = playerBoard;
     this.#domManager.makeBoard(playerBoard, this.#playerBoardArray);
     this.#domManager.makeBoard(computerBoard, this.#computerBoardArray);

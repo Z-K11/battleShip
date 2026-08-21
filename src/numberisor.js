@@ -15,3 +15,5 @@ export const uniqueRandomiser = () => {
     }
   };
 };
+
+export const uniqueRangedNumberGenerator = uniqueRandomiser();

@@ -1,5 +1,6 @@
 // random number generator
 import { numberisor } from './numberisor.js';
+import { uniqueRangedNumberGenerator } from './numberisor.js';
 // class for handling all dom calls for gameBoard
 export default class boardManipulator {
   // decides which ship's turn is it to be placed
@@ -24,6 +25,10 @@ export default class boardManipulator {
     node.addEventListener('click', (e) => {
       // if all ships already placed return do nothing
       if (this.#playerShiPlacementIndex <= 4) this.#playerPlacer(e, shipObject);
+      else {
+        //this line is temporarily used for testing
+        // this.enemyCanonFire(node, shipObject, false);
+      }
     });
   }
 
@@ -178,5 +183,13 @@ export default class boardManipulator {
   }
   enemyCanonFire(node, playerShips, playerTurn) {
     if (playerTurn) return;
+    const num = uniqueRangedNumberGenerator();
+    const currentNode = document.querySelector(`#playerBoardGridBox${num}`);
+    if (currentNode.hasAttribute('data-ship-type')) {
+      const ship = currentNode.dataset.shipType;
+      playerShips[ship].hit();
+      currentNode.classList.remove('ship');
+      currentNode.classList.add('shipHurt');
+    }
   }
 }
