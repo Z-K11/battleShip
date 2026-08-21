@@ -14,6 +14,7 @@ export default class ships {
   // increases number of hits taken by the ship on call
   hit() {
     if (this.#numberOfHits < this.#shipLength) this.#numberOfHits++;
+    console.log("I'VE BEEN HIT!");
   }
 
   //

@@ -49,3 +49,6 @@ header {
 .ship {
   background-color: rgb(82, 0, 0);
 }
+.shipHit {
+  background-color: rgba(82, 0, 0, 0.438);
+}

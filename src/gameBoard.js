@@ -18,12 +18,18 @@ export default class gameBoard {
     Submarine: new shipMake(3),
     Destroyer: new shipMake(2),
   };
-
+  #playerGrid;
+  #computerGrid;
   constructor(playerBoard, computerBoard) {
+    this.#computerGrid = computerBoard;
+    this.#playerGrid = playerBoard;
     this.#domManager.makeBoard(playerBoard, this.#playerBoardArray);
     this.#domManager.makeBoard(computerBoard, this.#computerBoardArray);
     this.#domManager.initializeInput(playerBoard, this.#playerShips);
     this.#domManager.computerPlacer(computerBoard, this.#enemyShips);
     this.#domManager.initializeCannons(computerBoard, this.#enemyShips);
+  }
+  computerAttack() {
+    this.#domManager.enemyCanonFire(this.#playerGrid, this.#playerShips, false);
   }
 }

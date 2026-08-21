@@ -67,7 +67,6 @@ export default class boardManipulator {
               // delete dataset shipType from colliding cell
               delete currentNode.dataset.shipType;
               // remove ship from ui
-              currentNode.classList.remove('ship');
               // mark current point us visited to avoid placing ship again
               visited.push(currentCell);
             }
@@ -80,7 +79,6 @@ export default class boardManipulator {
           // assign ship type as dataset
           currentBox.dataset.shipType =
             shipName[this.#computerShiplacementIndex];
-          currentBox.classList.add('ship');
           // add current cell number into visited for tracking
           visited.push(num + i);
           previousCells.push(num + i);
@@ -175,6 +173,10 @@ export default class boardManipulator {
     if (target.hasAttribute('data-ship-type')) {
       const ship = target.dataset.shipType;
       enemyShips[ship].hit();
+      target.classList.add('shipHit');
     }
+  }
+  enemyCanonFire(node, playerShips, playerTurn) {
+    if (playerTurn) return;
   }
 }
