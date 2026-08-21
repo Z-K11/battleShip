@@ -24,5 +24,6 @@ export default class gameBoard {
     this.#domManager.makeBoard(computerBoard, this.#computerBoardArray);
     this.#domManager.initializeInput(playerBoard, this.#playerShips);
     this.#domManager.computerPlacer(computerBoard, this.#enemyShips);
+    this.#domManager.initializeCannons(computerBoard, this.#enemyShips);
   }
 }

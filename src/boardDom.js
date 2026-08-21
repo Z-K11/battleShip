@@ -159,4 +159,22 @@ export default class boardManipulator {
       return;
     }
   }
+
+  initializeCannons(node, enemyShips) {
+    node.addEventListener('click', (e) => {
+      if (this.#playerShiPlacementIndex <= 4) return;
+      else {
+        this.#attack(e, enemyShips);
+      }
+    });
+  }
+
+  // function to register a hit on an enemy ship
+  #attack(e, enemyShips) {
+    const target = e.target;
+    if (target.hasAttribute('data-ship-type')) {
+      const ship = target.dataset.shipType;
+      enemyShips[ship].hit();
+    }
+  }
 }
