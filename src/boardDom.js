@@ -7,7 +7,8 @@ export default class boardManipulator {
   // decides which ship's turn is it to be placed
   #playerShiPlacementIndex = 0;
   #computerShiplacementIndex = 0;
-
+  #playerHold = false;
+  #computerHold = false;
   #endGame = false;
 
   #referee = new gameRef();
@@ -168,15 +169,24 @@ export default class boardManipulator {
     node.addEventListener('click', (e) => {
       if (this.#playerShiPlacementIndex <= 4) return;
       if (this.#endGame) return;
-      this.#attack(e, enemyShips);
-      if (this.#referee.checkPlayerWin(enemyShips)) {
-        alert('Player Won');
-        this.#endGame = true;
+      let computerTurn = false;
+      if (!this.#computerHold) {
+        this.#attack(e, enemyShips);
+        if (this.#referee.checkPlayerWin(enemyShips)) {
+          alert('Player Won');
+          this.#endGame = true;
+        }
+        computerTurn = true;
       }
-      this.#enemyCanonFire(playerShips);
-      if (this.#referee.checkEnemyWin(playerShips)) {
-        alert('Enemy Won');
-        this.#endGame = true;
+      if (!this.#playerHold) {
+        while (this.#computerHold || computerTurn) {
+          this.#enemyCanonFire(playerShips);
+          if (this.#referee.checkEnemyWin(playerShips)) {
+            alert('Enemy Won');
+            this.#endGame = true;
+          }
+          computerTurn = false;
+        }
       }
     });
   }
@@ -189,6 +199,9 @@ export default class boardManipulator {
       const ship = target.dataset.shipType;
       enemyShips[ship].hit();
       target.classList.add('shipHit');
+      this.#playerHold = true;
+    } else {
+      this.#playerHold = false;
     }
   }
   #enemyCanonFire(playerShips) {
@@ -200,6 +213,9 @@ export default class boardManipulator {
       playerShips[ship].hit();
       currentNode.classList.remove('ship');
       currentNode.classList.add('shipHurt');
+      this.#computerHold = true;
+    } else {
+      this.#computerHold = false;
     }
   }
 }
