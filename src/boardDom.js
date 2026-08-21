@@ -1,4 +1,4 @@
-// random number genarator
+// random number generator
 import { numberisor } from './numberisor.js';
 // class for handling all dom calls for gameBoard
 export default class boardManipulator {
@@ -6,7 +6,7 @@ export default class boardManipulator {
   #playerShiPlacementIndex = 0;
   #computerShiplacementIndex = 0;
 
-  // takes a parent node and an array as arguement builds a grid appends it to the parent node and saves the references to the nodes in the array
+  // takes a parent node and an array as argument builds a grid appends it to the parent node and saves the references to the nodes in the array
   makeBoard(player, boardArray) {
     for (let i = 0; i < 100; i++) {
       boardArray[i] = document.createElement('div');
@@ -18,11 +18,11 @@ export default class boardManipulator {
     }
   }
   playerPlacer(node, shipObject) {
-    //click event listner
+    //click event listener
     node.addEventListener('click', (e) => {
       // if all ships already placed return do nothing
       if (this.#playerShiPlacementIndex > 4) return;
-      // ship names to be assigned to dataset attribue later
+      // ship names to be assigned to dataset attribute later
       const shipNames = Object.keys(shipObject);
       // function which returns the correct ship type using current index
       let currentShip = this.#returnShipType(
@@ -37,7 +37,7 @@ export default class boardManipulator {
       const range = parseInt(target.slice(-1));
 
       let shipCellLocation = [];
-      //if column can accomodate a ship place a ship
+      //if column can accommodate a ship place a ship
       if (9 - range >= currentShip.shipsLength - 1) {
         // looping until we place the ship on grid
         for (let i = 0; i < currentShip.shipsLength; i++) {
