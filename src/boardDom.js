@@ -17,63 +17,17 @@ export default class boardManipulator {
       player.appendChild(boardArray[i]);
     }
   }
-  playerPlacer(node, shipObject) {
+
+  // initialize player input event handler
+  initializeInput(node, shipObject) {
     //click event listener
     node.addEventListener('click', (e) => {
       // if all ships already placed return do nothing
-      if (this.#playerShiPlacementIndex > 4) return;
-      // ship names to be assigned to dataset attribute later
-      const shipNames = Object.keys(shipObject);
-      // function which returns the correct ship type using current index
-      let currentShip = this.#returnShipType(
-        shipObject,
-        this.#playerShiPlacementIndex
-      );
-
-      const target = e.target.id;
-      // extracting grid number from targetID as an integer
-      const referenceBox = parseInt(target.substring(18));
-      // extracting column number from the current row
-      const range = parseInt(target.slice(-1));
-
-      let shipCellLocation = [];
-      //if column can accommodate a ship place a ship
-      if (9 - range >= currentShip.shipsLength - 1) {
-        // looping until we place the ship on grid
-        for (let i = 0; i < currentShip.shipsLength; i++) {
-          // placing ship from origin to adjacent right node every turn
-          const currentBox = document.querySelector(
-            `#playerBoardGridBox${referenceBox + i}`
-          );
-          // checking if the current cell is occupied
-          if (currentBox.classList.contains('ship')) {
-            alert('Cannot place ship required cell(s) already occupied');
-            // looping over non previously occupied cells to remove the ship blocks
-            for (let cellNumber of shipCellLocation) {
-              const removeCell = document.querySelector(
-                `#playerBoardGridBox${cellNumber}`
-              );
-              // removing type data set
-              delete removeCell.dataset.shipType;
-              removeCell.classList.remove('ship');
-            }
-            return;
-          }
-          // added ship type to dataset
-          currentBox.dataset.shipType =
-            shipNames[this.#playerShiPlacementIndex];
-          // adding ship class to display the ship on screen
-          currentBox.classList.add('ship');
-          // keeping track of already visited empty nodes
-          shipCellLocation.push(referenceBox + i);
-        }
-        // increases index for next ship type
-        this.#playerShiPlacementIndex++;
-      } else {
-        return;
-      }
+      if (this.#playerShiPlacementIndex <= 4) this.#playerPlacer(e, shipObject);
     });
   }
+
+  // place enemy ships on the cell
   computerPlacer(node, shipObject) {
     let visited = [];
     // storing ship names
@@ -152,6 +106,57 @@ export default class boardManipulator {
       default:
         console.log('Error in playerPlacer switch statement');
         break;
+    }
+  }
+  #playerPlacer(e, shipObject) {
+    // ship names to be assigned to dataset attribute later
+    const shipNames = Object.keys(shipObject);
+    // function which returns the correct ship type using current index
+    let currentShip = this.#returnShipType(
+      shipObject,
+      this.#playerShiPlacementIndex
+    );
+
+    const target = e.target.id;
+    // extracting grid number from targetID as an integer
+    const referenceBox = parseInt(target.substring(18));
+    // extracting column number from the current row
+    const range = parseInt(target.slice(-1));
+
+    let shipCellLocation = [];
+    //if column can accommodate a ship place a ship
+    if (9 - range >= currentShip.shipsLength - 1) {
+      // looping until we place the ship on grid
+      for (let i = 0; i < currentShip.shipsLength; i++) {
+        // placing ship from origin to adjacent right node every turn
+        const currentBox = document.querySelector(
+          `#playerBoardGridBox${referenceBox + i}`
+        );
+        // checking if the current cell is occupied
+        if (currentBox.classList.contains('ship')) {
+          alert('Cannot place ship required cell(s) already occupied');
+          // looping over non previously occupied cells to remove the ship blocks
+          for (let cellNumber of shipCellLocation) {
+            const removeCell = document.querySelector(
+              `#playerBoardGridBox${cellNumber}`
+            );
+            // removing type data set
+            delete removeCell.dataset.shipType;
+            removeCell.classList.remove('ship');
+          }
+          return;
+        }
+        // added ship type to dataset
+        currentBox.dataset.shipType = shipNames[this.#playerShiPlacementIndex];
+        // adding ship class to display the ship on screen
+        currentBox.classList.add('ship');
+        // keeping track of already visited empty nodes
+        shipCellLocation.push(referenceBox + i);
+      }
+      // increases index for next ship type
+      this.#playerShiPlacementIndex++;
+    } else {
+      return;
     }
   }
 }

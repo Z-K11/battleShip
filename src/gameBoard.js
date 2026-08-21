@@ -22,7 +22,7 @@ export default class gameBoard {
   constructor(playerBoard, computerBoard) {
     this.#domManager.makeBoard(playerBoard, this.#playerBoardArray);
     this.#domManager.makeBoard(computerBoard, this.#computerBoardArray);
-    this.#domManager.playerPlacer(playerBoard, this.#playerShips);
+    this.#domManager.initializeInput(playerBoard, this.#playerShips);
     this.#domManager.computerPlacer(computerBoard, this.#enemyShips);
   }
 }
